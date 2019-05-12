@@ -1,10 +1,11 @@
 import React from "react";
-import { StyleSheet, Text, View, FlatList, ActivityIndicator, RefreshControl, Platform } from "react-native";
+import { StyleSheet, Text, View, FlatList, ActivityIndicator, RefreshControl, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { UiStatusBar, HorizontalListComponent } from "../component";
 import { viewTopPadding, calculatedHeight, URL } from "../utils";
 import { fetchListAction } from "../action/";
 import { Color } from "../res/";
+import NetInfo from "@react-native-community/netinfo";
 
 let index = 0;
 let urlsLength = URL.length - 1;
@@ -16,9 +17,21 @@ class HomeScreen extends React.PureComponent {
             feed: [],
             titleArray: [],
             isDataAvailable: false,
-            showListFooter: true
+            showListFooter: true,
+            isNetworkAvailable: true
         };
     }
+    _networkListener = data => {
+        if (data.type == "none") {
+            this.setState({
+                isNetworkAvailable: false
+            });
+        } else {
+            this.setState({
+                isNetworkAvailable: true
+            });
+        }
+    };
     onPressSeeAll = value => {
         this.props.navigation.navigate("FullList", {
             data: value
@@ -34,7 +47,14 @@ class HomeScreen extends React.PureComponent {
         }
     };
     componentDidMount() {
-        this._fetchList();
+        networkSubscription = NetInfo.addEventListener("connectionChange", this._networkListener);
+        if (this.state.isNetworkAvailable) {
+            this._fetchList();
+        } else {
+            this.setState({
+                isDataAvailable: false
+            });
+        }
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.response !== this.props.response && nextProps.response.data != undefined) {
@@ -61,13 +81,20 @@ class HomeScreen extends React.PureComponent {
         );
     };
     _onRefresh = () => {
-        this._fetchList();
         this.setState({
             feed: [],
             titleArray: [],
             isDataAvailable: false,
             showListFooter: true
         });
+        this._fetchList();
+    };
+    _renderItemEmptyView = () => {
+        if (!this.state.isNetworkAvailable) {
+            return <Text style={styles.textNoNetwork}>Please connect to working network connection!</Text>;
+        } else if (!this.state.isDataAvailable) {
+            return <ActivityIndicator size="large" color={Color.mayaBlue} hidesWhenStopped={true} style={{ flex: 1 }} />;
+        }
     };
     _keyExtractor = (item, index) => item.id;
     render() {
@@ -75,7 +102,8 @@ class HomeScreen extends React.PureComponent {
             <View style={styles.container}>
                 <UiStatusBar backgroundColor="white" barStyle="dark-content" />
                 <Text style={styles.textheader}>Infopedia</Text>
-                {this.state.isDataAvailable ? (
+
+                {this.state.isDataAvailable && this.state.isNetworkAvailable ? (
                     <FlatList
                         overScrollMode="never"
                         showsVerticalScrollIndicator={false}
@@ -93,6 +121,7 @@ class HomeScreen extends React.PureComponent {
                                 animating={this.state.showListFooter}
                             />
                         }
+                        ListEmptyComponent={<Text style={styles.textNoNetwork}>Some error occured, Please try again!</Text>}
                         refreshControl={
                             <RefreshControl
                                 colors={[Color.mayaBlueDark, Color.mayaBlue]}
@@ -102,10 +131,13 @@ class HomeScreen extends React.PureComponent {
                         }
                     />
                 ) : (
-                    <ActivityIndicator size="large" color={Color.mayaBlue} hidesWhenStopped={true} style={{ flex: 1 }} />
+                    <View style={{ flex: 1 }}>{this._renderItemEmptyView()}</View>
                 )}
             </View>
         );
+    }
+    componentWillUnmount() {
+        NetInfo.removeEventListener("connectionChange", this._networkListener);
     }
 }
 
@@ -121,6 +153,12 @@ const styles = StyleSheet.create({
         fontFamily: "ProductSans-Bold",
         fontSize: 38,
         paddingBottom: 8
+    },
+    textNoNetwork: {
+        color: "grey",
+        fontFamily: "ProductSans-Bold",
+        fontSize: 22,
+        marginTop: calculatedHeight(4)
     }
 });
 
@@ -144,7 +182,3 @@ export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(HomeScreen);
-
-// <Text style={{ textAlign: "center", paddingTop: 16, paddingBottom: 16, fontFamily: "sans-regular" }}>
-//     Made with <Text style={{ color: "red" }}>:hearts:</Text> in India
-// </Text>
