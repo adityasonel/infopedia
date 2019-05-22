@@ -1,6 +1,15 @@
 🚀 Infopedia - React Native Boilerplate
 ===========================================
 
+[![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/adityasonel)
+
+```
+The alternative to good architecture is always bad architecture.
+There is no such thing as no architecture.
+
+-Walter White
+```
+
 [![React Native](https://img.shields.io/badge/React%20Native-v0.59.8-blue.svg)](https://facebook.github.io/react-native/)
 [![React Navigation V3](https://img.shields.io/badge/React%20Navigation-v3.9.1-blue.svg)](https://reactnavigation.org/)
 [![Axios](https://img.shields.io/badge/Axios-v0.18.0-blue.svg)](https://github.com/axios/axios)
@@ -59,7 +68,13 @@ This Type based Architecture scales smoothly for small - medium apps. If you guy
     * Hit `Run` after selecting the desired device
 14. Enjoy!!!
 
-
 ## Contributing
 
 PRs are welcome
+
+## Questions? 🤔
+
+Hit me on
+
+[![Twitter](https://img.shields.io/badge/Twitter-%40heisen_brg-blue.svg)](https://twitter.com/heisen_brg)
+[![Linkedin](https://img.shields.io/badge/Linkedin-%40AdityaSonel-blue.svg)](www.linkedin.com/in/aditya-sonel)
