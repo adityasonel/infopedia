@@ -18,10 +18,17 @@ There is no such thing as no architecture.
 Infopedia is a starting point for React Native application. This project is configured with redux, redux saga, redux thunk
 and axios. Latest version of react-navigation with NavigationService instead of Redux Integration.
 
-
 ## Scalability Factor
 
 This Type based Architecture scales smoothly for small - medium apps. If you guys are building a very large application I would suggest using the following feature based architecture which will be more developer friendly with ease of scaling.
+
+## Screenshots
+
+<img align="left" src="https://github.com/adityasonel/infopedia/blob/master/ss/Simulator%20Screen%20Shot%20-%20iPhone%207%20-%202019-05-13%20at%2008.50.18.png" width="200" height="350" />
+<img align="left" src="https://github.com/adityasonel/infopedia/blob/master/ss/Simulator%20Screen%20Shot%20-%20iPhone%207%20-%202019-05-13%20at%2008.50.20.png" width="200" height="350" />
+<img src="https://github.com/adityasonel/infopedia/blob/master/ss/Simulator%20Screen%20Shot%20-%20iPhone%207%20-%202019-05-13%20at%2008.50.24.png" width="200" height="350" />
+<img align="left" src="https://github.com/adityasonel/infopedia/blob/master/ss/Simulator%20Screen%20Shot%20-%20iPhone%207%20-%202019-05-13%20at%2008.50.27.png" width="200" height="350" /> 
+<img src="https://github.com/adityasonel/infopedia/blob/master/ss/Simulator%20Screen%20Shot%20-%20iPhone%207%20-%202019-05-13%20at%2008.50.45.png" width="200" height="350" />
 
 ## Features
 
